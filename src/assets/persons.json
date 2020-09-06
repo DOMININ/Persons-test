@@ -2,13 +2,18 @@
   "persons": [
     {
       "id": 1,
-      "name": "John",
-      "location": "Boo"
+      "firstName": "test1",
+      "secondName": "testov1"
     },
     {
       "id": 2,
-      "name": "Michael",
-      "location": "Robinson"
+      "firstName": "test1",
+      "secondName": "testov1"
+    },
+    {
+      "id": 3,
+      "firstName": "test1",
+      "secondName": "testov1"
     }
   ]
 }
