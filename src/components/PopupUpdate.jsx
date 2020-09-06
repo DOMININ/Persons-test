@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Popup = (props) => {
+const PopupAdd = (props) => {
   return (
     <div className="overlay">
       <div className="popup">
-        <h2 className="popup__title">{props.type} сотрудника</h2>
+        <h2 className="popup__title">Редактирование сотрудника</h2>
         <div className="wrapper">
           <button className="popup__back" onClick={props.onClose}>
             Назад к списку
@@ -18,4 +18,4 @@ const Popup = (props) => {
   )
 }
 
-export default Popup
+export default PopupAdd

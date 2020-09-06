@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import avatar from '../img/avatar.jpg'
-import Popup from './Popup'
+import PopupAdd from './PopupAdd'
 
 const Table = () => {
   const apiUrl = 'http://localhost:3001/persons'
   const [data, setData] = useState([])
   const [popup, setPopup] = useState(false)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(apiUrl)
-      setData(result.data)
-    }
+  const fetchData = async () => {
+    const result = await axios(apiUrl)
+    setData(result.data)
+  }
 
+  useEffect(() => {
     fetchData()
   }, [])
 
@@ -25,13 +25,22 @@ const Table = () => {
     setPopup(false)
   }
 
-  const deletePerson = (id) => {
-    axios.delete(`http://localhost:3001/persons/${id}`).then((res) => {
-      console.log(res) // статус
+  const updateData = () => {
+    setPopup(false)
+    fetchData()
+  }
 
-      const newData = data.filter((person) => person.id !== id)
-      setData(newData)
-    })
+  const deletePerson = (id, name, lname) => {
+    const askToDelete = window.confirm(`Удалить пользователя ${name} ${lname}?`)
+
+    if (askToDelete) {
+      axios.delete(`http://localhost:3001/persons/${id}`).then((res) => {
+        console.log(res.status) // статус
+
+        const newData = data.filter((person) => person.id !== id)
+        setData(newData)
+      })
+    }
   }
 
   return (
@@ -57,7 +66,9 @@ const Table = () => {
                   <button className="personal__staff-body-edit"></button>
                   <button
                     className="personal__staff-body-delete"
-                    onClick={() => deletePerson(person.id)}></button>
+                    onClick={() =>
+                      deletePerson(person.id, person.firstName, person.lastName)
+                    }></button>
                 </td>
               </tr>
             )
@@ -73,7 +84,7 @@ const Table = () => {
           </tr>
         </tfoot>
       </table>
-      {popup && <Popup type="Создание" onClose={setClosePopup} />}
+      {popup && <PopupAdd onUpdateData={updateData} onClose={setClosePopup} />}
     </section>
   )
 }
