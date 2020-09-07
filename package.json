@@ -17,7 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "./node_modules/.bin/eslint ./src/Components/*"
+    "lint": "./node_modules/.bin/eslint ./src/Components/*",
+    "server": "npx json-server --watch src/assets/persons.json --port 3001"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,7 +36,6 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.8.1",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^6.11.0",
