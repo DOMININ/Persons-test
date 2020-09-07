@@ -1,5 +1,6 @@
-import React from 'react'
-import './Toast.scss'
+/* eslint-disable react/prop-types */
+import React from 'react';
+import './Toast.scss';
 
 const Toast = ({ status }) => {
   const code = {
@@ -7,7 +8,7 @@ const Toast = ({ status }) => {
     400: 'incorrect',
     404: 'not-found',
     500: 'server-error',
-  }
+  };
 
   return (
     <div className={`notification-container ${code[status]}`}>
@@ -17,7 +18,7 @@ const Toast = ({ status }) => {
         <p className="notification-message">Ошибка программы, повторите позже</p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Toast
+export default Toast;

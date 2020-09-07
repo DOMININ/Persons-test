@@ -1,70 +1,74 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import avatar from '../img/avatar.jpg'
-import PopupAdd from './PopupAdd'
-import PopupEdit from './PopupEdit'
-import Toast from './Toast'
+/* eslint-disable no-alert */
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable import/no-unresolved */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import avatar from '../img/avatar.jpg';
+import PopupAdd from './PopupAdd';
+import PopupEdit from './PopupEdit';
+import Toast from './Toast';
 
 const Table = () => {
-  const apiUrl = 'http://localhost:3001/persons'
-  const [data, setData] = useState([])
-  const [popup, setPopup] = useState(false)
-  const [popupEdit, setPopupEdit] = useState(false)
-  const [personEdit, setPersonEdit] = useState({})
-  const [toast, setToast] = useState(false)
-  const [toastStatus, setToastStatus] = useState()
+  const apiUrl = 'http://localhost:3001/persons';
+  const [data, setData] = useState([]);
+  const [popup, setPopup] = useState(false);
+  const [popupEdit, setPopupEdit] = useState(false);
+  const [personEdit, setPersonEdit] = useState({});
+  const [toast, setToast] = useState(false);
+  const [toastStatus, setToastStatus] = useState();
 
   const fetchData = async () => {
-    const result = await axios(apiUrl)
-    setData(result.data)
-  }
+    const result = await axios(apiUrl);
+    setData(result.data);
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const setOpenPopup = () => {
-    setPopup(true)
-  }
+    setPopup(true);
+  };
 
   const setClosePopup = () => {
-    setPopup(false)
-    setPopupEdit(false)
-  }
+    setPopup(false);
+    setPopupEdit(false);
+  };
 
   const setOpenPopupEdit = (id, name, lname) => {
-    setPopupEdit(true)
-    setPersonEdit({ id, name, lname })
-  }
+    setPopupEdit(true);
+    setPersonEdit({ id, name, lname });
+  };
 
   const updateData = () => {
-    setClosePopup()
-    fetchData()
-  }
+    setClosePopup();
+    fetchData();
+  };
+
+  const setToastNotif = (status) => {
+    setToastStatus(status);
+    setToast(true);
+    setTimeout(() => setToast(false), 2000);
+  };
 
   const deletePerson = (id, name, lname) => {
-    const askToDelete = window.confirm(`Удалить сотрудника ${name} ${lname}?`)
+    const askToDelete = window.confirm(`Удалить сотрудника ${name} ${lname}?`);
 
     if (askToDelete) {
       axios
         .delete(`http://localhost:3001/persons/${id}`)
         .then((res) => {
-          setToastNotif(res.status)
+          setToastNotif(res.status);
 
-          const newData = data.filter((person) => person.id !== id)
-          setData(newData)
+          const newData = data.filter((person) => person.id !== id);
+          setData(newData);
         })
         .catch((error) => {
-          setToastNotif(error.response.status)
-        })
+          setToastNotif(error.response.status);
+        });
     }
-  }
-
-  const setToastNotif = (status) => {
-    setToastStatus(status)
-    setToast(true)
-    setTimeout(() => setToast(false), 2000)
-  }
+  };
 
   return (
     <section className="personal">
@@ -73,33 +77,29 @@ const Table = () => {
           <tr>
             <th>Имя</th>
             <th>Фамилия</th>
-            <th></th>
+            <th />
           </tr>
         </thead>
         <tbody className="personal__staff-body">
-          {data.map((person) => {
-            return (
-              <tr key={person.id}>
-                <td>
-                  <img src={avatar} alt="Аватар" className="personal__staff-body-avatar" />
-                  {person.firstName}
-                </td>
-                <td>{person.lastName}</td>
-                <td>
-                  <button
-                    className="personal__staff-body-edit"
-                    onClick={() =>
-                      setOpenPopupEdit(person.id, person.firstName, person.lastName)
-                    }></button>
-                  <button
-                    className="personal__staff-body-delete"
-                    onClick={() =>
-                      deletePerson(person.id, person.firstName, person.lastName)
-                    }></button>
-                </td>
-              </tr>
-            )
-          })}
+          {data.map((person) => (
+            <tr key={person.id}>
+              <td>
+                <img src={avatar} alt="Аватар" className="personal__staff-body-avatar" />
+                {person.firstName}
+              </td>
+              <td>{person.lastName}</td>
+              <td>
+                <button
+                  className="personal__staff-body-edit"
+                  onClick={() => setOpenPopupEdit(person.id, person.firstName, person.lastName)}
+                />
+                <button
+                  className="personal__staff-body-delete"
+                  onClick={() => deletePerson(person.id, person.firstName, person.lastName)}
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
         <tfoot className="personal__staff-footer">
           <tr>
@@ -117,7 +117,7 @@ const Table = () => {
       )}
       {toast && <Toast status={toastStatus} />}
     </section>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

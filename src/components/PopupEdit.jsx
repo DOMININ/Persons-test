@@ -1,32 +1,36 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+/* eslint-disable no-alert */
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/prop-types */
+/* eslint-disable import/no-unresolved */
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const PopupEdit = ({ onUpdateData, onClose, person }) => {
-  const [inputNameValue, setInputNameValue] = useState(person.name)
-  const [inputLNameValue, setInputLNameValue] = useState(person.lname)
+  const [inputNameValue, setInputNameValue] = useState(person.name);
+  const [inputLNameValue, setInputLNameValue] = useState(person.lname);
 
   const inputNameHandler = (e) => {
-    setInputNameValue(e.target.value)
-  }
+    setInputNameValue(e.target.value);
+  };
   const inputLNameHandler = (e) => {
-    setInputLNameValue(e.target.value)
-  }
+    setInputLNameValue(e.target.value);
+  };
 
   const editPerson = async () => {
-    let onlyWords = /^[a-zа-яё]+$/i
+    const onlyWords = /^[a-zа-яё]+$/i;
 
     if (onlyWords.test(inputNameValue) && onlyWords.test(inputLNameValue)) {
       const persona = {
         firstName: inputNameValue,
         lastName: inputLNameValue,
-      }
-      await axios.put(`http://localhost:3001/persons/${person.id}`, persona)
+      };
+      await axios.put(`http://localhost:3001/persons/${person.id}`, persona);
 
-      onUpdateData()
+      onUpdateData();
     } else {
-      alert('В полях могут быть только буквы')
+      alert('В полях могут быть только буквы');
     }
-  }
+  };
 
   return (
     <div className="overlay">
@@ -42,7 +46,6 @@ const PopupEdit = ({ onUpdateData, onClose, person }) => {
             className="popup__input"
             value={inputNameValue}
             onChange={(e) => inputNameHandler(e)}
-            autoFocus
           />
           <input
             type="text"
@@ -57,7 +60,7 @@ const PopupEdit = ({ onUpdateData, onClose, person }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PopupEdit
+export default PopupEdit;
