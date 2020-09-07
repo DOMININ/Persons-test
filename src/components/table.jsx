@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import avatar from '../img/avatar.jpg'
 import PopupAdd from './PopupAdd'
+import PopupEdit from './PopupEdit'
 
 const Table = () => {
   const apiUrl = 'http://localhost:3001/persons'
   const [data, setData] = useState([])
   const [popup, setPopup] = useState(false)
+  const [popupEdit, setPopupEdit] = useState(false)
+  const [personEdit, setPersonEdit] = useState({})
 
   const fetchData = async () => {
     const result = await axios(apiUrl)
@@ -23,10 +26,16 @@ const Table = () => {
 
   const setClosePopup = () => {
     setPopup(false)
+    setPopupEdit(false)
+  }
+
+  const setOpenPopupEdit = (id, name, lname) => {
+    setPopupEdit(true)
+    setPersonEdit({ id, name, lname })
   }
 
   const updateData = () => {
-    setPopup(false)
+    setClosePopup()
     fetchData()
   }
 
@@ -63,7 +72,11 @@ const Table = () => {
                 </td>
                 <td>{person.lastName}</td>
                 <td>
-                  <button className="personal__staff-body-edit"></button>
+                  <button
+                    className="personal__staff-body-edit"
+                    onClick={() =>
+                      setOpenPopupEdit(person.id, person.firstName, person.lastName)
+                    }></button>
                   <button
                     className="personal__staff-body-delete"
                     onClick={() =>
@@ -85,6 +98,9 @@ const Table = () => {
         </tfoot>
       </table>
       {popup && <PopupAdd onUpdateData={updateData} onClose={setClosePopup} />}
+      {popupEdit && (
+        <PopupEdit person={personEdit} onUpdateData={updateData} onClose={setClosePopup} />
+      )}
     </section>
   )
 }
