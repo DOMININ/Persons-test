@@ -1,0 +1,26 @@
+.notification-container {
+  padding: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+.success {
+  background-color: #5cb85c;
+}
+
+.incorrect {
+  background-color: #d9534f;
+}
+
+.not-found {
+  background-color: #d9534f;
+}
+
+.server-error {
+  background-color: #f0ad4e;
+}

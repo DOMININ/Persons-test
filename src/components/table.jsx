@@ -3,6 +3,7 @@ import axios from 'axios'
 import avatar from '../img/avatar.jpg'
 import PopupAdd from './PopupAdd'
 import PopupEdit from './PopupEdit'
+import Toast from './Toast'
 
 const Table = () => {
   const apiUrl = 'http://localhost:3001/persons'
@@ -10,6 +11,8 @@ const Table = () => {
   const [popup, setPopup] = useState(false)
   const [popupEdit, setPopupEdit] = useState(false)
   const [personEdit, setPersonEdit] = useState({})
+  const [toast, setToast] = useState(false)
+  const [toastStatus, setToastStatus] = useState()
 
   const fetchData = async () => {
     const result = await axios(apiUrl)
@@ -40,16 +43,27 @@ const Table = () => {
   }
 
   const deletePerson = (id, name, lname) => {
-    const askToDelete = window.confirm(`Удалить пользователя ${name} ${lname}?`)
+    const askToDelete = window.confirm(`Удалить сотрудника ${name} ${lname}?`)
 
     if (askToDelete) {
-      axios.delete(`http://localhost:3001/persons/${id}`).then((res) => {
-        console.log(res.status) // статус
+      axios
+        .delete(`http://localhost:3001/persons/${id}`)
+        .then((res) => {
+          setToastNotif(res.status)
 
-        const newData = data.filter((person) => person.id !== id)
-        setData(newData)
-      })
+          const newData = data.filter((person) => person.id !== id)
+          setData(newData)
+        })
+        .catch((error) => {
+          setToastNotif(error.response.status)
+        })
     }
+  }
+
+  const setToastNotif = (status) => {
+    setToastStatus(status)
+    setToast(true)
+    setTimeout(() => setToast(false), 2000)
   }
 
   return (
@@ -101,6 +115,7 @@ const Table = () => {
       {popupEdit && (
         <PopupEdit person={personEdit} onUpdateData={updateData} onClose={setClosePopup} />
       )}
+      {toast && <Toast status={toastStatus} />}
     </section>
   )
 }

@@ -35,6 +35,7 @@ const PopupAdd = (props) => {
             placeholder="Введите имя сотрудника"
             className="popup__input"
             onChange={(e) => setFirstName(e.target.value)}
+            autoFocus
           />
           <input
             type="text"

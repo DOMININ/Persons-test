@@ -42,6 +42,7 @@ const PopupEdit = ({ onUpdateData, onClose, person }) => {
             className="popup__input"
             value={inputNameValue}
             onChange={(e) => inputNameHandler(e)}
+            autoFocus
           />
           <input
             type="text"
