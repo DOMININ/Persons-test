@@ -124,6 +124,12 @@
   }
 }
 
+@media (max-width: 660px) {
+  .personal__staff-body-avatar {
+    display: none;
+  }
+}
+
 .overlay {
   position: absolute;
   top: 0;
