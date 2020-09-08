@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import './App.scss';
-import Table from './Components/Table';
+import Table from './Сomponents/Тable';
 
 const App = () => <Table />;
 
